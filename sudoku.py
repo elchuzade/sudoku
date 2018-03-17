@@ -25,14 +25,57 @@ i, j = 0, 0
 
 # Asking user to make an input of the board
 def input_board(i,j):
+    result = []
     values_list = []
+    i_list = []
+    j_list = []
     for i in range(9):
         for j in range(9):
             cell_value = input('type in the value for X ' + str(i+1) + str(j+1) + ' - ')
             values_list.append(int(cell_value))
     return values_list
 
+# Fake input
 
+values_list = [ 9,3,4,   7,6,5,   2,1,8,
+                2,7,6,   9,8,1,   3,5,4,
+                8,5,1,   2,3,4,   6,7,9,
 
-values_list = input_board(i,j)
+                6,9,2,   5,1,3,   4,8,7,
+                4,8,3,   6,7,9,   5,2,1,
+                7,1,5,   8,4,2,   9,6,3,
+
+                3,4,7,   1,2,6,   8,9,5,
+                1,2,9,   3,5,8,   7,4,6,
+                5,6,8,   4,9,7,   1,3,2 ]
+
+# show fake input that will be used for future coding
 print(values_list)
+
+'''
+x68 = 5
+order = 62
+9*6 + 8
+'''
+
+# Find fa full info state from the values_list with all i and j and v included
+def ijv_finder(values_list, index):
+    ijv_list = []
+    v = values_list[index]
+    i = index % 9
+    j = index // 9
+    ijv_list.append(i)
+    ijv_list.append(j)
+    ijv_list.append(v)
+    return ijv_list
+
+
+ijv_state = []
+for index in range(81):
+    ijv_list = ijv_finder(values_list, index)
+    ijv_state.append(ijv_list)
+
+print(ijv_state)
+
+#values_list = input_board(i,j)
+#print(values_list)
