@@ -37,13 +37,14 @@ def input_board(i,j):
 
 # Fake input
 
+# lets turn 4 into 0 row5 col4
 values_list = [ 9,3,4,   7,6,5,   2,1,8,
                 2,7,6,   9,8,1,   3,5,4,
                 8,5,1,   2,3,4,   6,7,9,
 
                 6,9,2,   5,1,3,   4,8,7,
                 4,8,3,   6,7,9,   5,2,1,
-                7,1,5,   8,4,2,   9,6,3,
+                7,1,5,   8,0,2,   9,6,3,
 
                 3,4,7,   1,2,6,   8,9,5,
                 1,2,9,   3,5,8,   7,4,6,
@@ -58,7 +59,7 @@ order = 62
 9*6 + 8
 '''
 
-# Find fa full info state from the values_list with all i and j and v included
+# Find an ijv list from the values_list with all i and j and v included
 def ijv_finder(values_list, index):
     ijv_list = []
     v = values_list[index]
@@ -69,11 +70,18 @@ def ijv_finder(values_list, index):
     ijv_list.append(v)
     return ijv_list
 
+# Make a whole state of ijv lists
+def ijv_state_maker(values_list):
+    ijv_state = []
+    for index in range(81):
+        ijv_list = ijv_finder(values_list, index)
+        ijv_state.append(ijv_list)
+    return ijv_state
 
-ijv_state = []
-for index in range(81):
-    ijv_list = ijv_finder(values_list, index)
-    ijv_state.append(ijv_list)
+
+
+
+ijv_state = ijv_state_maker(values_list)
 
 print(ijv_state)
 
