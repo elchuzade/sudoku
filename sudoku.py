@@ -38,17 +38,17 @@ def input_board(i,j):
     return values_list
 
 # lets turn 4 into 0 row5 col4
-values_list = [ 9,3,4,   7,6,5,   2,1,8,
-                2,7,6,   9,8,1,   3,5,4,
-                8,5,1,   2,3,4,   6,7,9,
+values_list = [ 0,0,0,   7,0,0,   1,3,2,
+                0,0,8,   6,2,4,   0,9,5,
+                0,7,2,   5,1,3,   0,0,6,
 
-                6,9,2,   5,1,3,   4,8,7,
-                4,8,3,   6,7,9,   5,2,1,
-                7,1,5,   8,0,2,   9,6,3,
+                2,8,0,   4,0,5,   9,6,0,
+                3,0,0,   8,9,1,   0,2,0,
+                5,0,4,   0,6,0,   0,1,8,
 
-                3,4,7,   1,2,6,   8,9,5,
-                1,2,9,   3,5,8,   7,4,6,
-                5,6,8,   4,9,7,   1,3,2 ]
+                0,0,3,   1,7,0,   2,0,0,
+                4,0,9,   3,0,0,   0,7,1,
+                7,0,6,   9,4,0,   8,5,3 ]
 
 
 # Find an ijv list from the values_list with all i and j and v included
@@ -157,7 +157,7 @@ def full_col(ijv_state, current_cell_index):
     return result
 
 # Finding a tricol of the current cell
-def tribox(ijv_state, current_cell_index):
+def tri_box(ijv_state, current_cell_index):
     result = []
     result_index = []
     current_cell = ijv_state[current_cell_index]
@@ -204,33 +204,62 @@ def add_pos_values(ijv_state, current_cell_index, pos_values):
     modify_list = ijv_state[current_cell_index]
     v = modify_list[2]
     if v == 0:
+        modify_list.append(len(pos_values))
         modify_list.extend(pos_values)
+    else:
+        modify_list.append(0)
     ijv_state[current_cell_index] = modify_list
+    return ijv_state
+
+# Changin v value from ijv state if amount of pos values is one
+def assign_value(ijv_state):
+    for current_cell in ijv_state:
+        if current_cell[3] == 1:
+            current_cell[2] = current_cell[4]
+            current_cell[3] -= 1
+            del current_cell[4]
+        index = ijv_state.index(current_cell)
+        ijv_state[index] = current_cell
     return ijv_state
 
 # Iterating through all cells to apply constraint1
 # def easy(ijv_state):
 
-
-
+def fancy_output(ijv_state):
+    value = []
+    for i in ijv_state:
+        v = i[2]
+        value.append(v)
+    print(value[0],value[1],value[2],value[3],value[4],value[5],value[6],value[7],value[8],)
+    print(value[9],value[10],value[11],value[12],value[13],value[14],value[15],value[16],value[17])
+    print(value[18],value[19],value[20],value[21],value[22],value[23],value[24],value[25],value[26])
+    print(value[27],value[28],value[29],value[30],value[31],value[32],value[33],value[34],value[35])
+    print(value[36],value[37],value[38],value[39],value[40],value[41],value[42],value[43],value[44])
+    print(value[45],value[46],value[47],value[48],value[49],value[50],value[51],value[52],value[53])
+    print(value[54],value[55],value[56],value[57],value[58],value[59],value[60],value[61],value[62])
+    print(value[63],value[64],value[65],value[66],value[67],value[68],value[69],value[70],value[71])
+    print(value[72],value[73],value[74],value[75],value[76],value[77],value[78],value[79],value[80])
 
 
 ijv_state = ijv_state_maker(values_list)
-current_cell_index = 49
+for current_cell_index in range(81):
+    fullrow = full_row(ijv_state, current_cell_index)
+#    print('full row', fullrow)
+    fullcol = full_col(ijv_state, current_cell_index)
+#    print('full col', full_col)
+    tribox = tri_box(ijv_state, current_cell_index)
+#    print('tribox', tribox)
+    pos_values = constraint1(fullrow, fullcol, tribox)
+#    print('pos values', pos_values)
+    ijv_state = add_pos_values(ijv_state, current_cell_index, pos_values)
+print(ijv_state)
+#    print('\n')
+#add_values_amount(ijv_state)
+assign_value(ijv_state)
 print(ijv_state)
 print('\n')
-full_row = full_row(ijv_state, current_cell_index)
-print('full row', full_row)
-full_col = full_col(ijv_state, current_cell_index)
-print('full col', full_col)
-tribox = tribox(ijv_state, current_cell_index)
-print('tribox', tribox)
-pos_values = constraint1(full_row, full_col, tribox)
-print('pos values', pos_values)
-ijv_state = add_pos_values(ijv_state, current_cell_index, pos_values)
-print(ijv_state)
-
-
-
+fancy_output(ijv_state)
+print('\n')
+print(ijv_state[24])
 #values_list = input_board(i,j)
 #print(values_list)
