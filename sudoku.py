@@ -114,10 +114,12 @@ def row_east(ijv_state, current_cell_index):
         result.append(v_index)
     return result
 
-def full_row(row_east, row_west):
-    result = []
-    result.extend(row_west)
-    result.extend(row_east)
+def full_row(ijv_state, current_cell_index):
+    result, rw_east, rw_west = [], [], []
+    rw_east = row_east(ijv_state, current_cell_index)
+    rw_west = row_west(ijv_state, current_cell_index)
+    result.extend(rw_west)
+    result.extend(rw_east)
     return result
 
 # Finding the column to the North of the current cell including current cell
@@ -153,10 +155,12 @@ def col_south(ijv_state, current_cell_index):
         result.append(v_index)
     return result
 
-def full_col(col_north, col_south):
-    result = []
-    result.extend(col_north)
-    result.extend(col_south)
+def full_col(ijv_state, current_cell_index):
+    result, cl_north, cl_south = [], [], []
+    cl_north = col_north(ijv_state, current_cell_index)
+    cl_south = col_south(ijv_state, current_cell_index)
+    result.extend(cl_north)
+    result.extend(cl_south)
     return result
 
 # Finding a tricol of the current cell
@@ -181,6 +185,11 @@ def tribox(ijv_state, current_cell_index):
         result.append(value)
     return result
 
+# Combine the impossible values for a current cell from its row column and box
+def common_numbers(full_row, full_col, tribox):
+    result = []
+
+    return result
 
 
 
@@ -188,16 +197,12 @@ ijv_state = ijv_state_maker(values_list)
 current_cell_index = 49
 print(ijv_state)
 print('\n')
-row_west = row_west(ijv_state, current_cell_index)
-row_east = row_east(ijv_state, current_cell_index)
-full_row = full_row(row_east, row_west)
-print(full_row)
-col_north = col_north(ijv_state, current_cell_index)
-col_south = col_south(ijv_state, current_cell_index)
-full_col = full_col(col_north, col_south)
-print(full_col)
+full_row = full_row(ijv_state, current_cell_index)
+print('full row', full_row)
+full_col = full_col(ijv_state, current_cell_index)
+print('full col', full_col)
 tribox = tribox(ijv_state, current_cell_index)
-print(tribox)
+print('tribox', tribox)
 
 
 
