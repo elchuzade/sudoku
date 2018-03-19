@@ -198,9 +198,11 @@ def unique_numbers(full_row, full_col, tribox):
             result.append(x)
     return result
 
-
-
-
+def constraint1(full_row, full_col, tribox):
+    impossible_values = unique_numbers(full_row, full_col, tribox)
+    all_values = [0,1,2,3,4,5,6,7,8,9]
+    pos_values = np.setdiff1d(all_values, impossible_values)
+    return pos_values
 
 
 
@@ -215,8 +217,8 @@ full_col = full_col(ijv_state, current_cell_index)
 print('full col', full_col)
 tribox = tribox(ijv_state, current_cell_index)
 print('tribox', tribox)
-impossible_values = unique_numbers(full_row, full_col, tribox)
-print(impossible_values)
+pos_values = constraint1(full_row, full_col, tribox)
+print('pos values', pos_values)
 
 
 
