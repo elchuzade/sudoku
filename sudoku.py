@@ -63,8 +63,8 @@ order = 62
 def ijv_finder(values_list, index):
     ijv_list = []
     v = values_list[index]
-    i = index % 9
-    j = index // 9
+    i = index // 9
+    j = index % 9
     ijv_list.append(i)
     ijv_list.append(j)
     ijv_list.append(v)
@@ -78,12 +78,104 @@ def ijv_state_maker(values_list):
         ijv_state.append(ijv_list)
     return ijv_state
 
+# Index finder from its i and j coordinates
+def index_finder(i_index, j_index):
+    return i_index * 9 + j_index
+
+# Finding the row to the West of the current cell including current cell
+def row_west(ijv_state, current_cell_index):
+    result = []
+    current_cell = ijv_state[current_cell_index]
+    i_index = current_cell[0]
+    j_index = current_cell[1]
+    v_index = current_cell[2]
+    result.append(v_index)
+    while j_index > 0:
+        j_index -= 1
+        index = index_finder(i_index, j_index)
+        current_cell = ijv_state[index]
+        v_index = current_cell[2]
+        result.append(v_index)
+    result.reverse()
+    return result
+
+# Finding the row to the East of the current cell excluding current cell
+def row_east(ijv_state, current_cell_index):
+    result = []
+    current_cell = ijv_state[current_cell_index]
+    i_index = current_cell[0]
+    j_index = current_cell[1]
+    v_index = current_cell[2]
+    while j_index < 8:
+        j_index += 1
+        index = index_finder(i_index, j_index)
+        current_cell = ijv_state[index]
+        v_index = current_cell[2]
+        result.append(v_index)
+    return result
+
+def full_row(row_east, row_west):
+    result = []
+    result.extend(row_west)
+    result.extend(row_east)
+    return result
+
+# Finding the column to the North of the current cell including current cell
+def col_north(ijv_state, current_cell_index):
+    result = []
+    current_cell = ijv_state[current_cell_index]
+    i_index = current_cell[0]
+    j_index = current_cell[1]
+    v_index = current_cell[2]
+    result.append(v_index)
+    while i_index > 0:
+        i_index -= 1
+        index = index_finder(i_index, j_index)
+        current_cell = ijv_state[index]
+        v_index = current_cell[2]
+        result.append(v_index)
+    result.reverse()
+    return result
+
+
+# Finding the column to the South of the current cell excluding current cell
+def col_south(ijv_state, current_cell_index):
+    result = []
+    current_cell = ijv_state[current_cell_index]
+    i_index = current_cell[0]
+    j_index = current_cell[1]
+    v_index = current_cell[2]
+    while i_index < 8:
+        i_index += 1
+        index = index_finder(i_index, j_index)
+        current_cell = ijv_state[index]
+        v_index = current_cell[2]
+        result.append(v_index)
+    return result
+
+def full_col(col_north, col_south):
+    result = []
+    result.extend(col_north)
+    result.extend(col_south)
+    return result
+
+
 
 
 
 ijv_state = ijv_state_maker(values_list)
-
+current_cell_index = 49
 print(ijv_state)
+print('\n')
+row_west = row_west(ijv_state, current_cell_index)
+row_east = row_east(ijv_state, current_cell_index)
+full_row = full_row(row_east, row_west)
+print(full_row)
+col_north = col_north(ijv_state, current_cell_index)
+col_south = col_south(ijv_state, current_cell_index)
+full_col = full_col(col_north, col_south)
+print(full_col)
+
 
 #values_list = input_board(i,j)
 #print(values_list)
