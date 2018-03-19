@@ -37,8 +37,6 @@ def input_board(i,j):
             values_list.append(int(cell_value))
     return values_list
 
-# Fake input
-
 # lets turn 4 into 0 row5 col4
 values_list = [ 9,3,4,   7,6,5,   2,1,8,
                 2,7,6,   9,8,1,   3,5,4,
@@ -52,14 +50,6 @@ values_list = [ 9,3,4,   7,6,5,   2,1,8,
                 1,2,9,   3,5,8,   7,4,6,
                 5,6,8,   4,9,7,   1,3,2 ]
 
-# show fake input that will be used for future coding
-print(values_list)
-
-'''
-x68 = 5
-order = 62
-9*6 + 8
-'''
 
 # Find an ijv list from the values_list with all i and j and v included
 def ijv_finder(values_list, index):
@@ -116,6 +106,7 @@ def row_east(ijv_state, current_cell_index):
         result.append(v_index)
     return result
 
+# Finding a full row from East and West combination
 def full_row(ijv_state, current_cell_index):
     result, rw_east, rw_west = [], [], []
     rw_east = row_east(ijv_state, current_cell_index)
@@ -141,7 +132,6 @@ def col_north(ijv_state, current_cell_index):
     result.reverse()
     return result
 
-
 # Finding the column to the South of the current cell excluding current cell
 def col_south(ijv_state, current_cell_index):
     result = []
@@ -157,6 +147,7 @@ def col_south(ijv_state, current_cell_index):
         result.append(v_index)
     return result
 
+# Finding a full column from North and South combination
 def full_col(ijv_state, current_cell_index):
     result, cl_north, cl_south = [], [], []
     cl_north = col_north(ijv_state, current_cell_index)
@@ -198,11 +189,28 @@ def unique_numbers(full_row, full_col, tribox):
             result.append(x)
     return result
 
+# Constraint 1 to find possible values from row, col, tribox
 def constraint1(full_row, full_col, tribox):
     impossible_values = unique_numbers(full_row, full_col, tribox)
     all_values = [0,1,2,3,4,5,6,7,8,9]
-    pos_values = np.setdiff1d(all_values, impossible_values)
+    pos_values = []
+    for i in all_values:
+        if i not in impossible_values:
+            pos_values.append(i)
     return pos_values
+
+# Modifying ijv with possible values
+def add_pos_values(ijv_state, current_cell_index, pos_values):
+    modify_list = ijv_state[current_cell_index]
+    v = modify_list[2]
+    if v == 0:
+        modify_list.extend(pos_values)
+    ijv_state[current_cell_index] = modify_list
+    return ijv_state
+
+# Iterating through all cells to apply constraint1
+# def easy(ijv_state):
+
 
 
 
@@ -219,7 +227,8 @@ tribox = tribox(ijv_state, current_cell_index)
 print('tribox', tribox)
 pos_values = constraint1(full_row, full_col, tribox)
 print('pos values', pos_values)
-
+ijv_state = add_pos_values(ijv_state, current_cell_index, pos_values)
+print(ijv_state)
 
 
 
