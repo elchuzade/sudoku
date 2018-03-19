@@ -1,3 +1,5 @@
+import numpy as np
+
 '''
 
 x00 x01 x02   x03 x04 x05   x06 x07 x08
@@ -186,10 +188,20 @@ def tribox(ijv_state, current_cell_index):
     return result
 
 # Combine the impossible values for a current cell from its row column and box
-def common_numbers(full_row, full_col, tribox):
-    result = []
-
+def unique_numbers(full_row, full_col, tribox):
+    result, total_list = [], []
+    total_list.extend(full_row)
+    total_list.extend(full_col)
+    total_list.extend(tribox)
+    for x in total_list:
+        if x not in result:
+            result.append(x)
     return result
+
+
+
+
+
 
 
 
@@ -203,6 +215,9 @@ full_col = full_col(ijv_state, current_cell_index)
 print('full col', full_col)
 tribox = tribox(ijv_state, current_cell_index)
 print('tribox', tribox)
+impossible_values = unique_numbers(full_row, full_col, tribox)
+print(impossible_values)
+
 
 
 
