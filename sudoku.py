@@ -159,6 +159,27 @@ def full_col(col_north, col_south):
     result.extend(col_south)
     return result
 
+# Finding a tricol of the current cell
+def tribox(ijv_state, current_cell_index):
+    result = []
+    result_index = []
+    current_cell = ijv_state[current_cell_index]
+    i_index = current_cell[0]
+    j_index = current_cell[1]
+    trirow = i_index // 3    # i value of a tribox among all 9 triboxes = 1
+    tricol = j_index // 3    # j value of a tribox among all 9 triboxes = 1
+    for n in range(3):
+        first_index = trirow * 3 * 9 + tricol * 3 + n * 9
+        second_index = first_index + 1
+        third_index = second_index + 1
+        result_index.append(first_index)
+        result_index.append(second_index)
+        result_index.append(third_index)
+    for i in result_index:
+        value_list = ijv_state[i]
+        value = value_list[2]
+        result.append(value)
+    return result
 
 
 
@@ -175,6 +196,9 @@ col_north = col_north(ijv_state, current_cell_index)
 col_south = col_south(ijv_state, current_cell_index)
 full_col = full_col(col_north, col_south)
 print(full_col)
+tribox = tribox(ijv_state, current_cell_index)
+print(tribox)
+
 
 
 #values_list = input_board(i,j)
