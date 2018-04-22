@@ -1,14 +1,14 @@
 import numpy as np
 
-input_state = [ 0,0,0,   0,0,0,   0,0,0,
-                0,0,0,   0,1,0,   0,3,2,
-                7,3,1,   5,0,0,   8,0,0,
-                6,0,0,   0,0,8,   0,0,0,
-                5,0,9,   0,2,0,   0,4,0,
-                3,0,7,   0,0,5,   0,0,0,
-                0,0,0,   0,0,1,   4,0,0,
-                0,2,8,   0,4,3,   9,6,0,
-                0,0,0,   0,0,0,   0,2,7 ]
+input_state = [ 9,0,0,   4,0,1,   8,3,0,
+                0,0,0,   0,3,6,   0,4,0,
+                0,7,0,   0,0,0,   0,0,6,
+                8,0,0,   0,0,4,   0,0,1,
+                0,0,0,   0,0,3,   0,0,0,
+                0,0,1,   0,0,7,   4,9,8,
+                4,9,0,   1,0,0,   0,0,0,
+                0,0,0,   2,0,0,   6,0,0,
+                0,1,0,   3,6,0,   0,7,0 ]
 
 next_state = input_state[:]
 
@@ -314,6 +314,7 @@ def hard(next_state):
                                 pos_values_update.remove(m[0])
                             full_state[row_index][1] = pos_values_update
                 if len(unique_second_values) == 1:
+                    row_col = 1     # 1 means it is in a column
                     row_col_index = set(unique_second_values)
                     full_pos_values_col_box = []
                     whole_col = []
