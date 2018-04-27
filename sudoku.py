@@ -1,17 +1,5 @@
 import numpy as np
 
-input_state = [ 9,0,0,   4,0,1,   8,3,0,
-                0,0,0,   0,3,6,   0,4,0,
-                0,7,0,   0,0,0,   0,0,6,
-                8,0,0,   0,0,4,   0,0,1,
-                0,0,0,   0,0,3,   0,0,0,
-                0,0,1,   0,0,7,   4,9,8,
-                4,9,0,   1,0,0,   0,0,0,
-                0,0,0,   2,0,0,   6,0,0,
-                0,1,0,   3,6,0,   0,7,0 ]
-
-next_state = input_state[:]
-
 # Find all zero entries
 def find_zeros(next_state):
     zeros = []
@@ -73,6 +61,10 @@ def zeros_info(i, next_state):
     full_row = row(i, next_state)
     full_col = col(i, next_state)
     tribox = box(i, next_state)
+#    print(full_row)
+#    print(full_col)
+#    print(tribox)
+#    print('\n')
     info = []
     for number in range(9):
         number += 1
@@ -350,14 +342,39 @@ def hard(next_state):
 
 
 
-state = 0
-while state != next_state:
-    state = next_state[:]
-    next_state = easy(next_state)
-    next_state = medium(next_state)
-    next_state = hard(next_state)
 
-value = next_state
-fancy_output(value)
-print(next_state)
-print('\n')
+def make_input():
+    input_state = []
+    for i in range(9):
+        print('row number', i+1)
+        row = input('type in the numbers - ')
+        row = int(row)
+        number = 9
+        for i in range(9):
+            number -= 1
+            value = 10**number
+            answer = row // value
+            row = row % value
+            input_state.append(answer)
+    return input_state
+
+
+
+def sudoku():
+    print('\n')
+    next_state = make_input()
+    value = next_state
+    fancy_output(value)
+    print('\n')
+    state = 0
+    while state != next_state:
+        state = next_state[:]
+        next_state = easy(next_state)
+        next_state = medium(next_state)
+        next_state = hard(next_state)
+    value = next_state
+    fancy_output(value)
+    print('\n')
+
+
+sudoku()
